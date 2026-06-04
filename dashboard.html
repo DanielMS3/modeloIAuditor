@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard QA - Análisis Inteligente</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; padding: 20px; }
+        .box { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .chart-container { height: 300px; width: 100%; position: relative; }
+        .details-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .details-table td { padding: 12px; border-bottom: 1px solid #eee; }
+        .label { font-weight: bold; color: #2c3e50; width: 30%; }
+        .btn-container { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-analisis { background: #3498db; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>Dashboard de Auditoría QA</h1>
+    
+    <div class="grid-layout">
+        <div class="box"><h3>Score Final por Archivo</h3><div class="chart-container"><canvas id="homeBar"></canvas></div></div>
+        <div class="box"><h3>Distribución de Resultados</h3><div class="chart-container"><canvas id="homePie"></canvas></div></div>
+        <div class="box"><h3>Score vs Tiempo</h3><div class="chart-container"><canvas id="homeScatter"></canvas></div></div>
+        <div class="box"><h3>Promedio General Atributos</h3><div class="chart-container"><canvas id="homeRadar"></canvas></div></div>
+    </div>
+    
+    <div class="box">
+        <table id="tablaReportes" class="display" style="width:100%">
+            <thead><tr><th>Archivo</th><th>Score</th><th>Resultado</th><th>Acciones</th></tr></thead>
+        </table>
+    </div>
+
+    <div id="panelDetalles" class="grid-layout" style="display:none;">
+        <div class="box"><h3>Score por Atributo</h3><div class="chart-container"><canvas id="spiderChart"></canvas></div></div>
+        <div class="box"><h3>Dinámica Emocional</h3><div class="chart-container"><canvas id="canvasGrafico"></canvas></div></div>
+        <div class="box" style="grid-column: span 2;">
+            <table class="details-table">
+                <tr><td class="label">Resultado:</td><td id="detResultado"></td></tr>
+                <tr><td class="label">Tiempo:</td><td id="detTiempo"></td></tr>
+                <tr><td class="label">Análisis:</td><td id="detAnalisis"></td></tr>
+                <tr><td class="label">Observaciones:</td><td id="detObs"></td></tr>
+                <tr><td class="label">Conclusión IA:</td><td id="detConclusion"></td></tr>
+            </table>
+            <div class="btn-container">
+                <button class="btn-analisis" style="background:#d9534f;" onclick="descargarPDF()">Generar PDF</button>
+                <button class="btn-analisis" style="background:#27ae60;" onclick="exportarExcelGlobal()">Exportar a Excel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        let spider = null, lineal = null, dataGlobal = [], currentItem = null;
+
+        $(document).ready(function() {
+            $.getJSON('datos_reportes.json', function(data) {
+                dataGlobal = data;
+
+                new Chart(document.getElementById('homeBar'), { type: 'bar', data: { labels: data.map(d => d.archivo), datasets: [{ label: 'Score', data: data.map(d => d.score_final), backgroundColor: '#3498db' }] }, options: { responsive: true, maintainAspectRatio: false } });
+                const counts = data.reduce((acc, d) => { acc[d.resultado_final] = (acc[d.resultado_final] || 0) + 1; return acc; }, {});
+                new Chart(document.getElementById('homePie'), { type: 'pie', data: { labels: Object.keys(counts), datasets: [{ data: Object.values(counts), backgroundColor: ['#2ecc71', '#e74c3c', '#f1c40f'] }] }, options: { responsive: true, maintainAspectRatio: false } });
+                new Chart(document.getElementById('homeScatter'),{type:'scatter',data:{datasets:[{label:'Score vs Tiempo',data:data.map(d=>({x:d.tiempo_ejecucion_segundos,y:d.score_final})),backgroundColor:c=>c.raw?(c.raw.y>=80?'#2ecc71':(c.raw.y>=60?'#f1c40f':'#e74c3c')):'#e74c3c',pointRadius:8,pointHoverRadius:12,pointStyle:'circle'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` Score: ${c.raw.y} | Tiempo: ${c.raw.x}s`}}},scales:{x:{title:{display:true,text:'Segundos de ejecución',font:{weight:'bold'}},grid:{drawBorder:false,color:'#f0f0f0'}},y:{title:{display:true,text:'Score Final',font:{weight:'bold'}},min:0,max:100,grid:{color:'#f0f0f0'}}}}});
+                
+                const allAttr = data.flatMap(d => d.detalle_auditoria);
+                const avgAttr = allAttr.reduce((acc, curr) => { acc[curr.atributo] = (acc[curr.atributo] || 0) + curr.score_obtenido / data.length; return acc; }, {});
+                new Chart(document.getElementById('homeRadar'), { type: 'radar', data: { labels: Object.keys(avgAttr), datasets: [{ label: 'Promedio Equipo', data: Object.values(avgAttr), backgroundColor: 'rgba(231, 76, 60, 0.2)' }] }, options: { responsive: true, maintainAspectRatio: false } });
+
+                // Inicializar Tabla una sola vez
+                $('#tablaReportes').DataTable({ 
+                    data: data, 
+                    columns: [
+                        { data: 'archivo' }, 
+                        { data: 'score_final' }, 
+                        { data: 'resultado_final' }, 
+                        { data: null, render: (d,t,r) => `
+                            <button class="btn-analisis" onclick="auditar('${r.archivo.replace(/'/g, "\\'")}')">Ver Análisis</button>
+                            <button class="btn-analisis" style="background:#27ae60;" onclick="verTexto('${r.archivo.replace(/'/g, "\\'")}')">Ver Texto</button>
+                        ` }
+                    ] 
+                });
+            });
+        });
+
+        function verTexto(archivo) {
+            // Aquí el archivo YA incluye el .mp3, así que NO lo quites
+            const ruta = 'transcripciones/' + archivo + '.json';
+            
+            console.log("Buscando archivo en:", ruta);
+
+            $.getJSON(ruta, function(trans) {
+                localStorage.setItem('transcripcionActual', JSON.stringify(trans));
+                localStorage.setItem('archivoActual', archivo);
+                window.open('transcripcion.html', '_blank');
+            }).fail(function() { 
+                alert("No se encontró el archivo: " + ruta); 
+            });
+        }
+
+        function auditar(archivo) {
+            $('#panelDetalles').show();
+            currentItem = dataGlobal.find(i => i.archivo === archivo);
+            $('#detResultado').text(currentItem.resultado_final);
+            $('#detTiempo').text(currentItem.tiempo_ejecucion_segundos + " seg");
+            $('#detAnalisis').text(currentItem.analisis_resultado);
+            $('#detObs').text(currentItem.observaciones);
+            $('#detConclusion').text(currentItem.analisis_grafica_ia.conclusion);
+
+            if(lineal) lineal.destroy();
+
+            // Cargamos el JSON de transcripción y dibujamos la gráfica
+            $.getJSON('transcripciones/' + archivo + '.json', function(trans) {
+                let tiempos = trans.map(d => d.tiempo);
+                
+                // Filtramos los datos para las líneas
+                let dataCliente = trans.map(d => d.rol === 'CLIENTE' ? d.sentimiento : null);
+                let dataAgente = trans.map(d => d.rol === 'AGENTE' ? d.sentimiento : null);
+
+                lineal = new Chart(document.getElementById('canvasGrafico'), {
+                    type: 'line',
+                    data: {
+                        labels: tiempos,
+                        datasets: [
+                            { label: 'Cliente', data: dataCliente, borderColor: '#3498db', fill: false, spanGaps: true },
+                            { label: 'Agente', data: dataAgente, borderColor: '#e67e22', fill: false, spanGaps: true }
+                        ]
+                    },
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false,
+                        scales: { y: { min: -1, max: 1 } } // Asumiendo sentimiento de 0 a 1
+                    }
+                });
+            });
+            
+            if(spider) spider.destroy();
+            spider = new Chart(document.getElementById('spiderChart'), { type: 'radar', data: { labels: currentItem.detalle_auditoria.map(d => d.atributo), datasets: [{ label: 'Score', data: currentItem.detalle_auditoria.map(d => d.score_obtenido), backgroundColor: 'rgba(52, 152, 219, 0.2)', borderColor: '#2980b9' }] }, options: { responsive: true, maintainAspectRatio: false } });
+
+            $.getJSON('transcripciones/' + archivo.replace('.mp3', '') + '.json', function(trans) {
+                if(lineal) lineal.destroy();
+                let lastC = 0, lastA = 0;
+                lineal = new Chart(document.getElementById('canvasGrafico'), { type: 'line', data: { labels: trans.map(d => d.tiempo), datasets: [{ label: 'Cliente', data: trans.map(d => { if(d.rol==='CLIENTE') lastC=d.sentimiento; return lastC; }), borderColor: '#3498db' }, { label: 'Agente', data: trans.map(d => { if(d.rol==='AGENTE') lastA=d.sentimiento; return lastA; }), borderColor: '#e67e22' }]}, options: { responsive: true, maintainAspectRatio: false } });
+            });
+        }
+
+        async function descargarPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'mm', 'a4');
+        const opts = { scale: 2, backgroundColor: '#ffffff', useCORS: true };
+
+        // 1. Título
+        doc.setFontSize(18);
+        doc.text("Reporte de Auditoría QA", 20, 20);
+
+        // 2. Agregar los campos de texto
+        doc.setFontSize(12);
+        let yPos = 35; // Posición vertical inicial
+        
+        const campos = [
+            { label: "Resultado:", val: $('#detResultado').text() },
+            { label: "Tiempo:", val: $('#detTiempo').text() },
+            { label: "Análisis:", val: $('#detAnalisis').text() },
+            { label: "Observaciones:", val: $('#detObs').text() },
+            { label: "Conclusión IA:", val: $('#detConclusion').text() }
+        ];
+
+        campos.forEach(c => {
+            doc.setFont(undefined, 'bold');
+            doc.text(c.label, 20, yPos);
+            doc.setFont(undefined, 'normal');
+            
+            // SplitTextToSize permite que el texto largo salte de línea automáticamente
+            const textoDividido = doc.splitTextToSize(c.val, 170);
+            doc.text(textoDividido, 20, yPos + 7);
+            
+            yPos += (textoDividido.length * 7) + 10; // Ajustar posición según largo del texto
+        });
+
+        // 3. Agregar las gráficas una debajo de la otra, con tamaño reducido
+        const c1 = await html2canvas(document.querySelector("#spiderChart"), opts);
+        const c2 = await html2canvas(document.querySelector("#canvasGrafico"), opts);
+
+        // Dibujar primera imagen (Ancho: 120, Alto: 60)
+        doc.addImage(c1.toDataURL("image/png"), 'PNG', 40, yPos, 120, 60);
+
+        // Actualizamos yPos sumando la altura de la imagen (60) + un margen (10)
+        yPos += 70; 
+
+        // Dibujar segunda imagen (Ancho: 120, Alto: 60)
+        doc.addImage(c2.toDataURL("image/png"), 'PNG', 40, yPos, 120, 60);
+
+        doc.save("Reporte_QA_" + currentItem.archivo + ".pdf");
+    }
+
+        function exportarExcelGlobal() {
+            const ws_data = [["Archivo", "Score", "Resultado", "Tiempo", "Análisis", "Observaciones"], ...dataGlobal.map(d => [d.archivo, d.score_final, d.resultado_final, d.tiempo_ejecucion_segundos, d.analisis_resultado, d.observaciones])];
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(ws_data), "Datos_QA");
+            XLSX.writeFile(wb, "Reporte_Global_QA.xlsx");
+        }
+    </script>
+</body>
+</html>

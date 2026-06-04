@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Detallado de Llamada</title>
+    <style>
+        :root { --bg: #f4f7f6; --chat-w: 800px; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 20px; }
+        
+        .main-container { max-width: var(--chat-w); margin: auto; }
+        
+        header { background: #2c3e50; color: white; padding: 20px; border-radius: 12px 12px 0 0; }
+        
+        .section-box { background: white; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-radius: 8px; }
+        
+        /* Grilla para las tarjetas de silencio */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+        .stat-card { background:#f8f9fa; padding:15px; border-radius:8px; text-align: center; border-left: 4px solid #3498db; }
+        
+        #listaMensajes { display: flex; flex-direction: column; gap: 15px; }
+
+        .msg { padding: 12px 16px; border-radius: 15px; max-width: 80%; word-wrap: break-word; line-height: 1.5; }
+        .CLIENTE { align-self: flex-end; background: #e3f2fd; border-bottom-right-radius: 2px; }
+        .AGENTE { align-self: flex-start; background: #f1f0f0; border-bottom-left-radius: 2px; }
+        .meta { font-size: 0.75rem; font-weight: bold; display: block; opacity: 0.7; margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <header>
+        <h2 id="titulo" style="margin:0; font-size: 1.2rem;">Cargando...</h2>
+    </header>
+
+    <!-- Resumen de Silencios -->
+    <div class="section-box">
+        <h3>Métricas de Silencio</h3>
+        <div id="statsSilencio" class="stats-grid">
+            <p>Cargando métricas...</p>
+        </div>
+    </div>
+
+    <!-- Transcripción -->
+    <div class="section-box" id="listaMensajes">
+        <!-- Los mensajes se cargan aquí -->
+    </div>
+</div>
+
+<script>
+    const data = JSON.parse(localStorage.getItem('transcripcionActual'));
+    const archivo = localStorage.getItem('archivoActual');
+
+    if (data) {
+        document.getElementById('titulo').innerText = "Transcripción: " + archivo;
+        const container = document.getElementById('listaMensajes');
+        
+        // Renderizado de mensajes
+        data.forEach(m => {
+            const div = document.createElement('div');
+            div.className = `msg ${m.rol}`;
+            div.innerHTML = `<span class="meta">${m.rol} - ${m.tiempo}</span><div>${m.texto}</div>`;
+            container.appendChild(div);
+        });
+
+        // Fetch de métricas de silencio
+        fetch(`metricas_silencio/${archivo}_silencio.json`)
+            .then(res => res.json())
+            .then(d => {
+                document.getElementById('statsSilencio').innerHTML = `
+                    <div class="stat-card">
+                        <small>Duración Total</small>
+                        <div style="font-size:1.1rem; font-weight:bold;">${d.duracion_total_audio}s</div>
+                    </div>
+                    <div class="stat-card">
+                        <small>Total Silencio</small>
+                        <div style="font-size:1.1rem; font-weight:bold; color:#e74c3c;">${d.total_silencio_segundos}s</div>
+                    </div>
+                    <div class="stat-card">
+                        <small>% Silencio</small>
+                        <div style="font-size:1.1rem; font-weight:bold;">${d.porcentaje_silencio}%</div>
+                    </div>
+                    <div class="stat-card">
+                        <small>Pausas Largas</small>
+                        <div style="font-size:1.1rem; font-weight:bold;">${d.cantidad_pausas_largas}</div>
+                    </div>
+                `;
+            })
+            .catch(() => {
+                document.getElementById('statsSilencio').innerHTML = "<p>No hay datos de silencio disponibles para este archivo.</p>";
+            });
+
+    } else {
+        document.getElementById('listaMensajes').innerHTML = 
+            "<p style='text-align:center;'>No se ha seleccionado ninguna llamada.</p>";
+    }
+</script>
+</body>
+</html>
