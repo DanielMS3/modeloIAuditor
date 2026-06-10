@@ -1,0 +1,993 @@
+[
+    {
+        "archivo": "4480408_RECU_HOGARIn_3150486100_20260525_084132_1070808600.mp3",
+        "duracion": 216.72,
+        "score_final": 64.9,
+        "resultado": "REPROBADO",
+        "analisis": "El agente mostró principios de empatía y fue efectivo en resolver las inquietudes del cliente, aunque hubo áreas que necesitan mejorar.",
+        "auditoria": [
+            {
+                "atributo": "Rapport Personalizado",
+                "peso_atributo": 3.0,
+                "cumplimiento": 0.7,
+                "observacion": "El agente mostró empatía y comprensión hacia el cliente.",
+                "score_obtenido": 2.1
+            },
+            {
+                "atributo": "Exploración de Uso y Preferencias",
+                "peso_atributo": 8.0,
+                "cumplimiento": 0.8,
+                "observacion": "El agente preguntó sobre el nombre del cliente y su situación.",
+                "score_obtenido": 6.4
+            },
+            {
+                "atributo": "Argumentación Basada en Cliente",
+                "peso_atributo": 8.0,
+                "cumplimiento": 0.8,
+                "observacion": "Propuso la solución más rápida para el cliente.",
+                "score_obtenido": 6.4
+            },
+            {
+                "atributo": "Objeciones Consultivas",
+                "peso_atributo": 10.0,
+                "cumplimiento": 0.7,
+                "observacion": "El agente respondió efectivamente a las inquietudes del cliente.",
+                "score_obtenido": 7.0
+            },
+            {
+                "atributo": "Formalización",
+                "peso_atributo": 8.0,
+                "cumplimiento": 0.6,
+                "observacion": "Se propusieron pasos a seguir, pero necesitaba un mayor detalle.",
+                "score_obtenido": 4.8
+            },
+            {
+                "atributo": "Lectura de disclaimers",
+                "peso_atributo": 12.0,
+                "cumplimiento": 0.5,
+                "observacion": "No se mencionaron disclaimers importantes.",
+                "score_obtenido": 6.0
+            },
+            {
+                "atributo": "Validación de identidad",
+                "peso_atributo": 12.0,
+                "cumplimiento": 0.7,
+                "observacion": "Se validó el nombre del cliente correctamente.",
+                "score_obtenido": 8.4
+            },
+            {
+                "atributo": "Claridad en Costo y Contrato",
+                "peso_atributo": 8.0,
+                "cumplimiento": 0.6,
+                "observacion": "Se discutieron costos, aunque no se explicaron detalles claros.",
+                "score_obtenido": 4.8
+            },
+            {
+                "atributo": "Diligencia completa de datos",
+                "peso_atributo": 10.0,
+                "cumplimiento": 0.6,
+                "observacion": "Faltó completar algunos datos del cliente.",
+                "score_obtenido": 6.0
+            },
+            {
+                "atributo": "Seguimiento y Referidos",
+                "peso_atributo": 3.0,
+                "cumplimiento": 0.5,
+                "observacion": "No se estableció un seguimiento claro.",
+                "score_obtenido": 1.5
+            },
+            {
+                "atributo": "Resumen breve y claro",
+                "peso_atributo": 3.0,
+                "cumplimiento": 0.6,
+                "observacion": "El resumen final fue escueto.",
+                "score_obtenido": 1.8
+            },
+            {
+                "atributo": "Despedida final",
+                "peso_atributo": 2.0,
+                "cumplimiento": 0.7,
+                "observacion": "La despedida fue correcta, pero podría ser más cálida.",
+                "score_obtenido": 1.4
+            },
+            {
+                "atributo": "Habilidades de comunicación",
+                "peso_atributo": 5.0,
+                "cumplimiento": 0.7,
+                "observacion": "El agente se comunicó adecuadamente.",
+                "score_obtenido": 3.5
+            },
+            {
+                "atributo": "Malas prácticas",
+                "peso_atributo": 8.0,
+                "cumplimiento": 0.6,
+                "observacion": "Hubo ciertas confusiones que podrían mejorarse.",
+                "score_obtenido": 4.8
+            }
+        ],
+        "observaciones": "Faltan elementos clave en la comunicación y descripción de procesos al cliente, lo cual impactó en la calificación final.",
+        "semaforo": {
+            "detalle": [
+                {
+                    "tiempo": "00:00",
+                    "rol": "CLIENTE",
+                    "sentimiento": -0.3,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "00:07",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:12",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.7,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:18",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.5,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:22",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.4,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:30",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.4,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:31",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.5,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:34",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "00:36",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "00:37",
+                    "rol": "CLIENTE",
+                    "sentimiento": -0.5,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "00:45",
+                    "rol": "CLIENTE",
+                    "sentimiento": -0.4,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "00:46",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:52",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:57",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.5,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:59",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.5,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:05",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:10",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:12",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.5,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:14",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "01:15",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.1,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:18",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:26",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.5,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:30",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:33",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:34",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:36",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "01:37",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:38",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:44",
+                    "rol": "CLIENTE",
+                    "sentimiento": -0.3,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "01:47",
+                    "rol": "CLIENTE",
+                    "sentimiento": -0.4,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "01:50",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "01:54",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "01:55",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "01:56",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "02:02",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.3,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "02:09",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "02:15",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.7,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "02:19",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "02:22",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.7,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "02:24",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "02:29",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.5,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "02:33",
+                    "rol": "CLIENTE",
+                    "sentimiento": -0.1,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "02:38",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "02:39",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "02:40",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "02:41",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "02:43",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "02:47",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "02:51",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "02:52",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "02:54",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.7,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "02:55",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "03:00",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.7,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "03:04",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "03:11",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "03:15",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "03:21",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.0,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "03:24",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.7,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "03:25",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "03:28",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.8,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "03:30",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.8,
+                    "estado": "POSITIVO"
+                }
+            ],
+            "resumen": {
+                "total_segmentos": 61,
+                "positivos": 35,
+                "neutros": 26,
+                "negativos": 0,
+                "momentos_criticos": [
+                    {
+                        "tiempo": "01:44",
+                        "impacto": -0.9
+                    },
+                    {
+                        "tiempo": "02:24",
+                        "impacto": -0.7
+                    }
+                ],
+                "transiciones": [
+                    {
+                        "tiempo": "00:07",
+                        "de": "NEUTRO",
+                        "a": "POSITIVO"
+                    },
+                    {
+                        "tiempo": "00:34",
+                        "de": "POSITIVO",
+                        "a": "NEUTRO"
+                    },
+                    {
+                        "tiempo": "00:46",
+                        "de": "NEUTRO",
+                        "a": "POSITIVO"
+                    },
+                    {
+                        "tiempo": "01:14",
+                        "de": "POSITIVO",
+                        "a": "NEUTRO"
+                    },
+                    {
+                        "tiempo": "01:15",
+                        "de": "NEUTRO",
+                        "a": "POSITIVO"
+                    },
+                    {
+                        "tiempo": "01:36",
+                        "de": "POSITIVO",
+                        "a": "NEUTRO"
+                    },
+                    {
+                        "tiempo": "01:37",
+                        "de": "NEUTRO",
+                        "a": "POSITIVO"
+                    },
+                    {
+                        "tiempo": "01:44",
+                        "de": "POSITIVO",
+                        "a": "NEUTRO"
+                    },
+                    {
+                        "tiempo": "02:02",
+                        "de": "NEUTRO",
+                        "a": "POSITIVO"
+                    },
+                    {
+                        "tiempo": "02:24",
+                        "de": "POSITIVO",
+                        "a": "NEUTRO"
+                    },
+                    {
+                        "tiempo": "02:29",
+                        "de": "NEUTRO",
+                        "a": "POSITIVO"
+                    },
+                    {
+                        "tiempo": "02:33",
+                        "de": "POSITIVO",
+                        "a": "NEUTRO"
+                    },
+                    {
+                        "tiempo": "02:54",
+                        "de": "NEUTRO",
+                        "a": "POSITIVO"
+                    },
+                    {
+                        "tiempo": "03:11",
+                        "de": "POSITIVO",
+                        "a": "NEUTRO"
+                    },
+                    {
+                        "tiempo": "03:24",
+                        "de": "NEUTRO",
+                        "a": "POSITIVO"
+                    }
+                ]
+            }
+        },
+        "analisis_grafica": {
+            "resultado": "REPROBADO",
+            "tiempo": "00:37",
+            "analisis": "La llamada fue clasificada como REPROBADA. El cliente promedio de 0.0279 se encuentra por debajo del umbral mínimo aceptable de 0.0, lo que indica una insatisfacción notable por parte del cliente. Además, el agente mantuvo un rendimiento promedio de 0.5279, que si bien está por encima del mínimo de 0.0, no logra compensar la baja satisfacción del cliente.",
+            "observaciones": "El tiempo crítico de 00:37 indica que la llamada no se extendió demasiado, lo que podría apuntar a una falta de resolución efectiva de la situación del cliente en un tiempo razonable. Los valores extremos de satisfacción del cliente (-0.5) sugieren una percepción negativa significativa y que el agente pudo no haber abordado adecuadamente las inquietudes del cliente.",
+            "conclusionIA": "Con base en la evaluación, es claro que el desempeño del agente no fue suficiente para asegurar la satisfacción del cliente, resultando en una interacción negativa. Se recomienda realizar capacitación adicional para mejorar las habilidades de comunicación y resolución de conflictos."
+        },
+        "sentimiento_promedio": 0.2967213114754098,
+        "sentimiento_max": 0.8,
+        "sentimiento_min": -0.5,
+        "variabilidad": 0.3515619541113741
+    },
+    {
+        "archivo": "4480626_RECU_HOGARMotor_3102110135_20260525_085858_1070808600.mp3",
+        "duracion": 244.0,
+        "score_final": 67.0,
+        "resultado": "REPROBADO",
+        "analisis": "El agente mostró competencias en varias áreas, pero tuvo deficiencias significativas en el manejo de objeciones y argumentación. La falta de claridad en los disclaimers y costos también afectó la experiencia del cliente.",
+        "auditoria": [
+            {
+                "atributo": "Rapport Personalizado",
+                "peso_atributo": 3.0,
+                "cumplimiento": 0.9,
+                "observacion": "El agente presentó un buen control de la conversación y se identificó claramente.",
+                "score_obtenido": 2.7
+            },
+            {
+                "atributo": "Exploración de Uso y Preferencias",
+                "peso_atributo": 8.0,
+                "cumplimiento": 0.8,
+                "observacion": "El agente formuló preguntas para entender las necesidades del cliente.",
+                "score_obtenido": 6.4
+            },
+            {
+                "atributo": "Argumentación Basada en Cliente",
+                "peso_atributo": 8.0,
+                "cumplimiento": 0.6,
+                "observacion": "El agente no adaptó su argumentación a las necesidades expresadas del cliente.",
+                "score_obtenido": 4.8
+            },
+            {
+                "atributo": "Objeciones Consultivas",
+                "peso_atributo": 10.0,
+                "cumplimiento": 0.5,
+                "observacion": "El agente no abordó correctamente las objeciones planteadas por el cliente.",
+                "score_obtenido": 5.0
+            },
+            {
+                "atributo": "Formalización",
+                "peso_atributo": 8.0,
+                "cumplimiento": 0.8,
+                "observacion": "Se hizo un intento de formalizar la validación de servicios.",
+                "score_obtenido": 6.4
+            },
+            {
+                "atributo": "Lectura de disclaimers",
+                "peso_atributo": 12.0,
+                "cumplimiento": 0.7,
+                "observacion": "No se realizaron disclaimers claros sobre la cobertura de internet.",
+                "score_obtenido": 8.4
+            },
+            {
+                "atributo": "Validación de identidad",
+                "peso_atributo": 12.0,
+                "cumplimiento": 0.8,
+                "observacion": "Se validó la información necesaria durante la conversación.",
+                "score_obtenido": 9.6
+            },
+            {
+                "atributo": "Claridad en Costo y Contrato",
+                "peso_atributo": 8.0,
+                "cumplimiento": 0.6,
+                "observacion": "No se ofrecieron detalles claros sobre costos y contratos.",
+                "score_obtenido": 4.8
+            },
+            {
+                "atributo": "Diligencia completa de datos",
+                "peso_atributo": 10.0,
+                "cumplimiento": 0.7,
+                "observacion": "Se recolectó información básica, pero faltaron otros datos importantes.",
+                "score_obtenido": 7.0
+            },
+            {
+                "atributo": "Seguimiento y Referidos",
+                "peso_atributo": 3.0,
+                "cumplimiento": 0.5,
+                "observacion": "El agente no estableció un seguimiento claro al finalizar la llamada.",
+                "score_obtenido": 1.5
+            },
+            {
+                "atributo": "Resumen breve y claro",
+                "peso_atributo": 3.0,
+                "cumplimiento": 0.6,
+                "observacion": "No se realizó un resumen de los puntos tratados.",
+                "score_obtenido": 1.8
+            },
+            {
+                "atributo": "Despedida final",
+                "peso_atributo": 2.0,
+                "cumplimiento": 0.7,
+                "observacion": "La despedida fue cortés, aunque falta de calidez.",
+                "score_obtenido": 1.4
+            },
+            {
+                "atributo": "Habilidades de comunicación",
+                "peso_atributo": 5.0,
+                "cumplimiento": 0.8,
+                "observacion": "El agente demostró habilidades de comunicación adecuadas.",
+                "score_obtenido": 4.0
+            },
+            {
+                "atributo": "Malas prácticas",
+                "peso_atributo": 8.0,
+                "cumplimiento": 0.4,
+                "observacion": "Se notaron malas prácticas en la respuesta a las necesidades del cliente.",
+                "score_obtenido": 3.2
+            }
+        ],
+        "observaciones": "Mejorar el enfoque consultivo y adaptarse a las necesidades del cliente para elevar la satisfacción del mismo.",
+        "semaforo": {
+            "detalle": [
+                {
+                    "tiempo": "00:00",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.7,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:03",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.9,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:05",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.7,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:08",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.9,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:10",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.9,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:13",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.8,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:18",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.8,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:21",
+                    "rol": "CLIENTE",
+                    "sentimiento": -0.5,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "00:28",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.9,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:31",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.8,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:33",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:39",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.7,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:41",
+                    "rol": "CLIENTE",
+                    "sentimiento": -0.5,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "00:47",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.5,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "00:51",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.8,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:00",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.7,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:01",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:03",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.9,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:05",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.7,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:09",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.6,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:11",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.8,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:13",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.8,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:26",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.7,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:30",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.8,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:42",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.8,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "01:45",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.9,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "02:04",
+                    "rol": "AGENTE",
+                    "sentimiento": 0.9,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "02:07",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.9,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "02:11",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.9,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "02:18",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.9,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "02:47",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.4,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "02:56",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.4,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "03:05",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.8,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "03:16",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.5,
+                    "estado": "POSITIVO"
+                },
+                {
+                    "tiempo": "03:23",
+                    "rol": "AGENTE",
+                    "sentimiento": -0.6,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "03:30",
+                    "rol": "AGENTE",
+                    "sentimiento": -0.4,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "03:35",
+                    "rol": "AGENTE",
+                    "sentimiento": -0.5,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "03:39",
+                    "rol": "CLIENTE",
+                    "sentimiento": -0.6,
+                    "estado": "NEUTRO"
+                },
+                {
+                    "tiempo": "03:48",
+                    "rol": "CLIENTE",
+                    "sentimiento": 0.5,
+                    "estado": "POSITIVO"
+                }
+            ],
+            "resumen": {
+                "total_segmentos": 39,
+                "positivos": 33,
+                "neutros": 6,
+                "negativos": 0,
+                "momentos_criticos": [
+                    {
+                        "tiempo": "00:21",
+                        "impacto": -1.3
+                    },
+                    {
+                        "tiempo": "00:41",
+                        "impacto": -1.2
+                    },
+                    {
+                        "tiempo": "03:23",
+                        "impacto": -1.1
+                    }
+                ],
+                "transiciones": [
+                    {
+                        "tiempo": "00:21",
+                        "de": "POSITIVO",
+                        "a": "NEUTRO"
+                    },
+                    {
+                        "tiempo": "00:28",
+                        "de": "NEUTRO",
+                        "a": "POSITIVO"
+                    },
+                    {
+                        "tiempo": "00:41",
+                        "de": "POSITIVO",
+                        "a": "NEUTRO"
+                    },
+                    {
+                        "tiempo": "00:47",
+                        "de": "NEUTRO",
+                        "a": "POSITIVO"
+                    },
+                    {
+                        "tiempo": "03:23",
+                        "de": "POSITIVO",
+                        "a": "NEUTRO"
+                    },
+                    {
+                        "tiempo": "03:48",
+                        "de": "NEUTRO",
+                        "a": "POSITIVO"
+                    }
+                ]
+            }
+        },
+        "analisis_grafica": {
+            "resultado": "REPROBADO",
+            "tiempo": "03:39",
+            "analisis": "La llamada fue evaluada en función de las métricas proporcionadas. El cliente tuvo un promedio de 0.541, mientras que el agente tuvo un promedio de 0.615. Esto indica que, aunque ambos estuvieron por debajo de la media en sus promedios, el agente tuvo un comportamiento ligeramente superior al del cliente. Sin embargo, el rango de evaluación muestra que ambos tuvieron puntuaciones mínimas de -0.6, lo que refleja un desempeño deficiente en la llamada.",
+            "observaciones": "El tiempo crítico de 3 minutos y 39 segundos podría sugerir que la llamada fue prolongada. Esto podría haber causado frustración en el cliente o que se abordaron múltiples temas, lo que podría haber afectado la calidad de la interacción. Las puntuaciones extremas de ambos (cliente y agente) sugieren que hubo momentos de interacción que no fueron satisfactorios.",
+            "conclusionIA": "La llamada se considera REPROBADA debido a las bajas métricas de satisfacción, a pesar de que el agente tuvo un rendimiento ligeramente mejor que el cliente. Se recomienda revisar la grabación de la llamada para identificar áreas específicas de mejora en la comunicación y el manejo del tiempo."
+        },
+        "sentimiento_promedio": 0.5487179487179487,
+        "sentimiento_max": 0.9,
+        "sentimiento_min": -0.6,
+        "variabilidad": 0.47602617622046195
+    }
+]

@@ -1,212 +1,486 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard QA - Análisis Inteligente</title>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; padding: 20px; }
-        .box { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .chart-container { height: 300px; width: 100%; position: relative; }
-        .details-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .details-table td { padding: 12px; border-bottom: 1px solid #eee; }
-        .label { font-weight: bold; color: #2c3e50; width: 30%; }
-        .btn-container { display: flex; gap: 10px; margin-top: 20px; }
-        .btn-analisis { background: #3498db; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; }
-    </style>
+<meta charset="UTF-8">
+<title>Dashboard QA PRO</title>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<style>
+body { font-family: 'Segoe UI'; background:#f4f7f6; padding:20px; }
+
+.grid { display:grid; grid-template-columns: repeat(4,1fr); gap:15px; margin-bottom:20px;}
+
+.grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap:20px; }
+
+.card {
+    padding:20px;
+    border-radius:10px;
+    color:white;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.green { background:#2ecc71; }
+.red { background:#e74c3c; }
+.yellow { background:#f1c40f; color:#333;}
+.blue { background:#34495e;}
+
+.box { background:white; padding:20px; border-radius:10px; margin-bottom:20px; }
+
+.alert { background:#e74c3c; color:white; padding:12px; border-radius:6px; margin-bottom:10px; }
+
+canvas { max-height:300px; }
+
+.details { display:none; }
+
+.message {
+    max-width:70%;
+    padding:10px 14px;
+    margin:6px;
+    border-radius:15px;
+    font-size:14px;
+    display:inline-block;
+}
+
+.agente {
+    background:#3498db;
+    color:white;
+    align-self:flex-end;
+    margin-left:auto;
+    text-align:right;
+}
+
+.cliente {
+    background:#ecf0f1;
+    color:#2c3e50;
+    align-self:flex-start;
+}
+
+.time {
+    font-size:10px;
+    opacity:0.5;
+    margin-top:4px;
+}
+
+#tablaAuditoria td, #tablaAuditoria th {
+    padding:10px;
+    border-bottom:1px solid #eee;
+    font-size:13px;
+}
+
+#tablaAuditoria tr:hover {
+    background:#f9f9f9;
+}
+
+.bad {
+    color:#e74c3c;
+    font-weight:bold;
+}
+
+.medium {
+    color:#f39c12;
+    font-weight:bold;
+}
+
+.good {
+    color:#2ecc71;
+    font-weight:bold;
+}
+</style>
 </head>
+
 <body>
 
-    <h1>Dashboard de Auditoría QA</h1>
-    
-    <div class="grid-layout">
-        <div class="box"><h3>Score Final por Archivo</h3><div class="chart-container"><canvas id="homeBar"></canvas></div></div>
-        <div class="box"><h3>Distribución de Resultados</h3><div class="chart-container"><canvas id="homePie"></canvas></div></div>
-        <div class="box"><h3>Score vs Tiempo</h3><div class="chart-container"><canvas id="homeScatter"></canvas></div></div>
-        <div class="box"><h3>Promedio General Atributos</h3><div class="chart-container"><canvas id="homeRadar"></canvas></div></div>
-    </div>
-    
-    <div class="box">
-        <table id="tablaReportes" class="display" style="width:100%">
-            <thead><tr><th>Archivo</th><th>Score</th><th>Resultado</th><th>Acciones</th></tr></thead>
-        </table>
-    </div>
+<h1>📊 Dashboard QA Inteligente PRO</h1>
 
-    <div id="panelDetalles" class="grid-layout" style="display:none;">
-        <div class="box"><h3>Score por Atributo</h3><div class="chart-container"><canvas id="spiderChart"></canvas></div></div>
-        <div class="box"><h3>Dinámica Emocional</h3><div class="chart-container"><canvas id="canvasGrafico"></canvas></div></div>
-        <div class="box" style="grid-column: span 2;">
-            <table class="details-table">
-                <tr><td class="label">Resultado:</td><td id="detResultado"></td></tr>
-                <tr><td class="label">Tiempo:</td><td id="detTiempo"></td></tr>
-                <tr><td class="label">Análisis:</td><td id="detAnalisis"></td></tr>
-                <tr><td class="label">Observaciones:</td><td id="detObs"></td></tr>
-                <tr><td class="label">Conclusión IA:</td><td id="detConclusion"></td></tr>
-            </table>
-            <div class="btn-container">
-                <button class="btn-analisis" style="background:#d9534f;" onclick="descargarPDF()">Generar PDF</button>
-                <button class="btn-analisis" style="background:#27ae60;" onclick="exportarExcelGlobal()">Exportar a Excel</button>
+<!-- KPI -->
+<div class="grid">
+    <div class="card green" id="kpiAprobados">0</div>
+    <div class="card red" id="kpiReprobados">0</div>
+    <div class="card yellow" id="kpiPromedio">0</div>
+    <div class="card blue" id="kpiTotal">0</div>
+</div>
+
+<!-- ALERTAS -->
+<div class="box">
+<h3>🚨 Alertas Inteligentes</h3>
+<div id="alertas"></div>
+</div>
+
+<!-- BARRA + TORTA -->
+<div class="grid-2">
+    <div class="box"><canvas id="barChart"></canvas></div>
+    <div class="box"><canvas id="pieChart"></canvas></div>
+</div>
+
+<!-- NUEVAS GRÁFICAS -->
+<div class="grid-2">
+    <div class="box"><canvas id="estadoChart"></canvas></div>
+    <div class="box"><canvas id="transicionesChart"></canvas></div>
+</div>
+
+<!-- SCATTER -->
+<div class="box"><canvas id="scatterChart"></canvas></div>
+
+<!-- TABLA -->
+<div class="box">
+<table id="tabla" class="display">
+<thead>
+<tr><th>Archivo</th><th>Score</th><th>Resultado</th><th>Acción</th></tr>
+</thead>
+</table>
+</div>
+
+<!-- DETALLE -->
+<div class="box details" id="panel">
+
+<h3>Detalle QA</h3>
+
+<p><b>Resultado:</b> <span id="detRes"></span></p>
+<p><b>Tiempo crítico:</b> <span id="detTiempo"></span></p>
+<p><b>Análisis:</b> <span id="detAnalisis"></span></p>
+<p><b>Observaciones:</b> <span id="detObs"></span></p>
+<p><b>Conclusión:</b> <span id="detCon"></span></p>
+
+<canvas id="radar"></canvas>
+<canvas id="line"></canvas>
+<h3>💬 Transcripción de la llamada</h3>
+<div id="chatContainer" style="
+    max-height:400px;
+    overflow-y:auto;
+    padding:15px;
+    background:#f1f1f1;
+    border-radius:10px;
+"></div>
+
+<h3>📋 Matriz de Auditoría</h3>
+
+<table id="tablaAuditoria" style="width:100%; border-collapse:collapse; margin-top:10px;">
+    <thead style="background:#2c3e50; color:white;">
+        <tr>
+            <th>Atributo</th>
+            <th>Peso</th>
+            <th>Cumplimiento</th>
+            <th>Score</th>
+            <th>Observación</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+</div>
+
+<script>
+
+let dataGlobal=[], radarChart, lineChart;
+
+const opcionesEjes = {
+    plugins:{
+        tooltip:{
+            callbacks:{
+                label:function(ctx){
+                    return `Valor: ${ctx.raw}`;
+                }
+            }
+        }
+    }
+};
+
+$(document).ready(function(){
+
+    $.getJSON('datos_dashboard.json', function(data){
+
+        dataGlobal = data;
+
+        let aprobados = data.filter(d=>d.resultado==="APROBADO").length;
+        let reprobados = data.filter(d=>d.resultado==="REPROBADO").length;
+        let promedio = (data.reduce((a,b)=>a+b.score_final,0)/data.length).toFixed(2);
+
+        $('#kpiAprobados').text("✅ Aprobados: "+aprobados);
+        $('#kpiReprobados').text("❌ Reprobados: "+reprobados);
+        $('#kpiPromedio').text("📈 Promedio: "+promedio);
+        $('#kpiTotal').text("📊 Total: "+data.length);
+
+        // ALERTAS
+        let alerts="";
+        data.forEach(d=>{
+            if(d.score_final<60)
+                alerts+=`<div class='alert'>⚠️ Score bajo (${d.score_final}) en ${d.archivo}</div>`;
+
+            if(d.semaforo?.resumen?.momentos_criticos?.length>0)
+                alerts+=`<div class='alert'>🔥 Caída emocional en ${d.archivo}</div>`;
+        });
+
+        $('#alertas').html(alerts || "✅ Sin alertas");
+
+        // ✅ BARRA (CON VALORES)
+        new Chart(barChart,{
+            type:'bar',
+            data:{
+                labels:data.map(d=>d.archivo),
+                datasets:[{
+                    label:'Score',
+                    data:data.map(d=>d.score_final),
+                    backgroundColor:'#3498db'
+                }]
+            },
+            options:{
+                scales:{
+                    x:{title:{display:true,text:'Llamadas'}},
+                    y:{title:{display:true,text:'Score'}, min:0,max:100}
+                },
+                plugins:{
+                    tooltip:{
+                        callbacks:{
+                            label:c=>`Score: ${c.raw}`
+                        }
+                    }
+                }
+            }
+        });
+
+        // ✅ TORTA
+        new Chart(pieChart,{
+            type:'pie',
+            data:{
+                labels:['Aprobado','Reprobado'],
+                datasets:[{data:[aprobados,reprobados]}]
+            },
+            options:{
+                plugins:{
+                    tooltip:{
+                        callbacks:{
+                            label:c=>`${c.label}: ${c.raw}`
+                        }
+                    }
+                }
+            }
+        });
+
+        // ✅ ESTADOS
+        let positivos=0, neutros=0, negativos=0;
+
+        data.forEach(d=>{
+            positivos+=d.semaforo.resumen.positivos;
+            neutros+=d.semaforo.resumen.neutros;
+            negativos+=d.semaforo.resumen.negativos;
+        });
+
+        new Chart(estadoChart,{
+            type:'doughnut',
+            data:{
+                labels:['Positivo','Neutro','Negativo'],
+                datasets:[{data:[positivos,neutros,negativos]}]
+            },
+            options:{
+                plugins:{
+                    tooltip:{
+                        callbacks:{
+                            label:c=>`${c.label}: ${c.raw}`
+                        }
+                    }
+                }
+            }
+        });
+
+        // ✅ TRANSICIONES
+        let transCount={};
+
+        data.forEach(d=>{
+            d.semaforo.resumen.transiciones.forEach(t=>{
+                let key=`${t.de} ➜ ${t.a}`;
+                transCount[key]=(transCount[key]||0)+1;
+            });
+        });
+
+        new Chart(transicionesChart,{
+            type:'bar',
+            data:{
+                labels:Object.keys(transCount),
+                datasets:[{
+                    label:'Cantidad',
+                    data:Object.values(transCount),
+                    backgroundColor:'#9b59b6'
+                }]
+            },
+            options:{
+                scales:{
+                    x:{title:{display:true,text:'Transiciones'}},
+                    y:{title:{display:true,text:'Frecuencia'}}
+                }
+            }
+        });
+
+        // ✅ SCATTER
+        new Chart(scatterChart,{
+            type:'scatter',
+            data:{
+                datasets:[{
+                    label:'Score vs Tiempo',
+                    data:data.map(d=>({x:d.duracion,y:d.score_final})),
+                    backgroundColor:c=>{
+                        let y=c.raw.y;
+                        return y>80?'green':y>60?'orange':'red';
+                    }
+                }]
+            },
+            options:{
+                scales:{
+                    x:{title:{display:true,text:'Duración (segundos)'}},
+                    y:{title:{display:true,text:'Score'},min:0,max:100}
+                },
+                plugins:{
+                    tooltip:{
+                        callbacks:{
+                            label:c=>`Tiempo: ${c.raw.x}s | Score: ${c.raw.y}`
+                        }
+                    }
+                }
+            }
+        });
+
+        // TABLA
+        $('#tabla').DataTable({
+            data:data,
+            columns:[
+                {data:'archivo'},
+                {data:'score_final'},
+                {data:'resultado'},
+                {data:null, render:(d,t,r)=>`<button onclick="ver('${r.archivo}')">Ver</button>`}
+            ]
+        });
+
+    });
+
+});
+
+function renderAuditoriaTable(auditoria){
+
+    let html = "";
+
+    auditoria.forEach(a => {
+
+        let clase = "";
+
+        if(a.cumplimiento >= 0.8) clase = "good";
+        else if(a.cumplimiento >= 0.6) clase = "medium";
+        else clase = "bad";
+
+        html += `
+        <tr>
+            <td>${a.atributo}</td>
+            <td>${a.peso_atributo}</td>
+            <td class="${clase}">${(a.cumplimiento*100).toFixed(0)}%</td>
+            <td class="${clase}">${a.score_obtenido}</td>
+            <td>${a.observacion}</td>
+        </tr>
+        `;
+    });
+
+    document.querySelector("#tablaAuditoria tbody").innerHTML = html;
+}
+
+function ver(archivo){
+
+    let d=dataGlobal.find(x=>x.archivo===archivo);
+    renderAuditoriaTable(d.auditoria);
+
+    $('#panel').show();
+
+    $('#detRes').text(d.resultado);
+    $('#detTiempo').text(d.analisis_grafica.tiempo);
+    $('#detAnalisis').text(d.analisis_grafica.analisis);
+    $('#detObs').text(d.analisis_grafica.observaciones);
+    $('#detCon').text(d.analisis_grafica.conclusionIA);
+
+    if(radarChart) radarChart.destroy();
+
+    // ✅ RADAR CON VALORES
+    radarChart=new Chart(radar,{
+        type:'radar',
+        data:{
+            labels:d.auditoria.map(a=>a.atributo),
+            datasets:[{
+                label:'Score atributo',
+                data:d.auditoria.map(a=>a.score_obtenido)
+            }]
+        }
+    });
+
+    // ✅ LINEAS MEJORADAS
+    $.getJSON('transcripciones/'+archivo+'.json',function(trans){
+
+        if(lineChart) lineChart.destroy();
+
+        let tiempos=[], cliente=[], agente=[], lc=0, la=0;
+
+        trans.forEach(t=>{
+            tiempos.push(t.tiempo);
+
+            if(t.rol==="CLIENTE") lc=t.sentimiento;
+            if(t.rol==="AGENTE") la=t.sentimiento;
+
+            cliente.push(lc);
+            agente.push(la);
+        });
+
+        lineChart=new Chart(line,{
+            type:'line',
+            data:{
+                labels:tiempos,
+                datasets:[
+                    {label:'Cliente',data:cliente,borderColor:'blue'},
+                    {label:'Agente',data:agente,borderColor:'orange'}
+                ]
+            },
+            options:{
+                scales:{
+                    x:{title:{display:true,text:'Tiempo'}},
+                    y:{title:{display:true,text:'Sentimiento'},min:-1,max:1}
+                },
+                plugins:{
+                    tooltip:{
+                        callbacks:{
+                            label:c=>`${c.dataset.label}: ${c.raw}`
+                        }
+                    }
+                }
+            }
+        });
+
+        renderChat(trans);
+    });
+}
+
+function renderChat(trans){
+
+    let html = "";
+
+    trans.forEach(t=>{
+
+        let clase = t.rol === "AGENTE" ? "agente" : "cliente";
+
+        html += `
+        <div style="display:flex; flex-direction:column;">
+            <div class="message ${clase}">
+                ${t.texto || t.text}
+                <div class="time">${t.tiempo} | ${t.rol}</div>
             </div>
         </div>
-    </div>
+        `;
+    });
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    $('#chatContainer').html(html);
 
-    <script>
-        let spider = null, lineal = null, dataGlobal = [], currentItem = null;
+    // Auto scroll al final
+    $('#chatContainer').scrollTop($('#chatContainer')[0].scrollHeight);
+}
+</script>
 
-        $(document).ready(function() {
-            $.getJSON('datos_reportes.json', function(data) {
-                dataGlobal = data;
-
-                new Chart(document.getElementById('homeBar'), { type: 'bar', data: { labels: data.map(d => d.archivo), datasets: [{ label: 'Score', data: data.map(d => d.score_final), backgroundColor: '#3498db' }] }, options: { responsive: true, maintainAspectRatio: false } });
-                const counts = data.reduce((acc, d) => { acc[d.resultado_final] = (acc[d.resultado_final] || 0) + 1; return acc; }, {});
-                new Chart(document.getElementById('homePie'), { type: 'pie', data: { labels: Object.keys(counts), datasets: [{ data: Object.values(counts), backgroundColor: ['#2ecc71', '#e74c3c', '#f1c40f'] }] }, options: { responsive: true, maintainAspectRatio: false } });
-                new Chart(document.getElementById('homeScatter'),{type:'scatter',data:{datasets:[{label:'Score vs Tiempo',data:data.map(d=>({x:d.tiempo_ejecucion_segundos,y:d.score_final})),backgroundColor:c=>c.raw?(c.raw.y>=80?'#2ecc71':(c.raw.y>=60?'#f1c40f':'#e74c3c')):'#e74c3c',pointRadius:8,pointHoverRadius:12,pointStyle:'circle'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` Score: ${c.raw.y} | Tiempo: ${c.raw.x}s`}}},scales:{x:{title:{display:true,text:'Segundos de ejecución',font:{weight:'bold'}},grid:{drawBorder:false,color:'#f0f0f0'}},y:{title:{display:true,text:'Score Final',font:{weight:'bold'}},min:0,max:100,grid:{color:'#f0f0f0'}}}}});
-                
-                const allAttr = data.flatMap(d => d.detalle_auditoria);
-                const avgAttr = allAttr.reduce((acc, curr) => { acc[curr.atributo] = (acc[curr.atributo] || 0) + curr.score_obtenido / data.length; return acc; }, {});
-                new Chart(document.getElementById('homeRadar'), { type: 'radar', data: { labels: Object.keys(avgAttr), datasets: [{ label: 'Promedio Equipo', data: Object.values(avgAttr), backgroundColor: 'rgba(231, 76, 60, 0.2)' }] }, options: { responsive: true, maintainAspectRatio: false } });
-
-                // Inicializar Tabla una sola vez
-                $('#tablaReportes').DataTable({ 
-                    data: data, 
-                    columns: [
-                        { data: 'archivo' }, 
-                        { data: 'score_final' }, 
-                        { data: 'resultado_final' }, 
-                        { data: null, render: (d,t,r) => `
-                            <button class="btn-analisis" onclick="auditar('${r.archivo.replace(/'/g, "\\'")}')">Ver Análisis</button>
-                            <button class="btn-analisis" style="background:#27ae60;" onclick="verTexto('${r.archivo.replace(/'/g, "\\'")}')">Ver Texto</button>
-                        ` }
-                    ] 
-                });
-            });
-        });
-
-        function verTexto(archivo) {
-            // Aquí el archivo YA incluye el .mp3, así que NO lo quites
-            const ruta = 'transcripciones/' + archivo + '.json';
-            
-            console.log("Buscando archivo en:", ruta);
-
-            $.getJSON(ruta, function(trans) {
-                localStorage.setItem('transcripcionActual', JSON.stringify(trans));
-                localStorage.setItem('archivoActual', archivo);
-                window.open('transcripcion.html', '_blank');
-            }).fail(function() { 
-                alert("No se encontró el archivo: " + ruta); 
-            });
-        }
-
-        function auditar(archivo) {
-            $('#panelDetalles').show();
-            currentItem = dataGlobal.find(i => i.archivo === archivo);
-            $('#detResultado').text(currentItem.resultado_final);
-            $('#detTiempo').text(currentItem.tiempo_ejecucion_segundos + " seg");
-            $('#detAnalisis').text(currentItem.analisis_resultado);
-            $('#detObs').text(currentItem.observaciones);
-            $('#detConclusion').text(currentItem.analisis_grafica_ia.conclusion);
-
-            if(lineal) lineal.destroy();
-
-            // Cargamos el JSON de transcripción y dibujamos la gráfica
-            $.getJSON('transcripciones/' + archivo + '.json', function(trans) {
-                let tiempos = trans.map(d => d.tiempo);
-                
-                // Filtramos los datos para las líneas
-                let dataCliente = trans.map(d => d.rol === 'CLIENTE' ? d.sentimiento : null);
-                let dataAgente = trans.map(d => d.rol === 'AGENTE' ? d.sentimiento : null);
-
-                lineal = new Chart(document.getElementById('canvasGrafico'), {
-                    type: 'line',
-                    data: {
-                        labels: tiempos,
-                        datasets: [
-                            { label: 'Cliente', data: dataCliente, borderColor: '#3498db', fill: false, spanGaps: true },
-                            { label: 'Agente', data: dataAgente, borderColor: '#e67e22', fill: false, spanGaps: true }
-                        ]
-                    },
-                    options: { 
-                        responsive: true, 
-                        maintainAspectRatio: false,
-                        scales: { y: { min: -1, max: 1 } } // Asumiendo sentimiento de 0 a 1
-                    }
-                });
-            });
-            
-            if(spider) spider.destroy();
-            spider = new Chart(document.getElementById('spiderChart'), { type: 'radar', data: { labels: currentItem.detalle_auditoria.map(d => d.atributo), datasets: [{ label: 'Score', data: currentItem.detalle_auditoria.map(d => d.score_obtenido), backgroundColor: 'rgba(52, 152, 219, 0.2)', borderColor: '#2980b9' }] }, options: { responsive: true, maintainAspectRatio: false } });
-
-            $.getJSON('transcripciones/' + archivo.replace('.mp3', '') + '.json', function(trans) {
-                if(lineal) lineal.destroy();
-                let lastC = 0, lastA = 0;
-                lineal = new Chart(document.getElementById('canvasGrafico'), { type: 'line', data: { labels: trans.map(d => d.tiempo), datasets: [{ label: 'Cliente', data: trans.map(d => { if(d.rol==='CLIENTE') lastC=d.sentimiento; return lastC; }), borderColor: '#3498db' }, { label: 'Agente', data: trans.map(d => { if(d.rol==='AGENTE') lastA=d.sentimiento; return lastA; }), borderColor: '#e67e22' }]}, options: { responsive: true, maintainAspectRatio: false } });
-            });
-        }
-
-        async function descargarPDF() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF('p', 'mm', 'a4');
-        const opts = { scale: 2, backgroundColor: '#ffffff', useCORS: true };
-
-        // 1. Título
-        doc.setFontSize(18);
-        doc.text("Reporte de Auditoría QA", 20, 20);
-
-        // 2. Agregar los campos de texto
-        doc.setFontSize(12);
-        let yPos = 35; // Posición vertical inicial
-        
-        const campos = [
-            { label: "Resultado:", val: $('#detResultado').text() },
-            { label: "Tiempo:", val: $('#detTiempo').text() },
-            { label: "Análisis:", val: $('#detAnalisis').text() },
-            { label: "Observaciones:", val: $('#detObs').text() },
-            { label: "Conclusión IA:", val: $('#detConclusion').text() }
-        ];
-
-        campos.forEach(c => {
-            doc.setFont(undefined, 'bold');
-            doc.text(c.label, 20, yPos);
-            doc.setFont(undefined, 'normal');
-            
-            // SplitTextToSize permite que el texto largo salte de línea automáticamente
-            const textoDividido = doc.splitTextToSize(c.val, 170);
-            doc.text(textoDividido, 20, yPos + 7);
-            
-            yPos += (textoDividido.length * 7) + 10; // Ajustar posición según largo del texto
-        });
-
-        // 3. Agregar las gráficas una debajo de la otra, con tamaño reducido
-        const c1 = await html2canvas(document.querySelector("#spiderChart"), opts);
-        const c2 = await html2canvas(document.querySelector("#canvasGrafico"), opts);
-
-        // Dibujar primera imagen (Ancho: 120, Alto: 60)
-        doc.addImage(c1.toDataURL("image/png"), 'PNG', 40, yPos, 120, 60);
-
-        // Actualizamos yPos sumando la altura de la imagen (60) + un margen (10)
-        yPos += 70; 
-
-        // Dibujar segunda imagen (Ancho: 120, Alto: 60)
-        doc.addImage(c2.toDataURL("image/png"), 'PNG', 40, yPos, 120, 60);
-
-        doc.save("Reporte_QA_" + currentItem.archivo + ".pdf");
-    }
-
-        function exportarExcelGlobal() {
-            const ws_data = [["Archivo", "Score", "Resultado", "Tiempo", "Análisis", "Observaciones"], ...dataGlobal.map(d => [d.archivo, d.score_final, d.resultado_final, d.tiempo_ejecucion_segundos, d.analisis_resultado, d.observaciones])];
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(ws_data), "Datos_QA");
-            XLSX.writeFile(wb, "Reporte_Global_QA.xlsx");
-        }
-    </script>
 </body>
 </html>

@@ -18,6 +18,43 @@ Este sistema automatiza la auditoría de archivos de audio mediante procesamient
 
 ---
 
+## 🐍 Configuración del Entorno Virtual
+
+Para mantener las librerías del proyecto organizadas y aisladas, utiliza un entorno virtual:
+
+1. **Crear el entorno virtual:**
+```bash
+python -m venv venv
+
+```
+
+
+2. **Configurar permisos de ejecución (si es necesario):**
+Si recibes un error al intentar activar el entorno, ejecuta este comando para permitir la ejecución de scripts en la terminal actual:
+```bash
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+
+```
+
+
+3. **Activar el entorno virtual:**
+```bash
+.\venv\Scripts\activate
+
+```
+
+
+
+---
+
+### ¿Cómo se integrarlo el README?
+
+1. Clonar el repositorio.
+2. Crear y activar el entorno virtual (lo que acabamos de agregar).
+3. Instalar las dependencias (`pip install...`).
+5. Procesar los audios.
+
+
 ## 🛠️ Instalación y Requisitos
 
 ### 1. Dependencias de Python
@@ -25,7 +62,7 @@ Este sistema automatiza la auditoría de archivos de audio mediante procesamient
 Asegúrate de tener instalado [Python](https://www.python.org/) y luego instala las librerías necesarias ejecutando:
 
 ```bash
-pip install openai whisper-openai pandas matplotlib python-dotenv
+pip install openai openai-whisper pandas matplotlib python-dotenv
 
 ```
 
@@ -61,6 +98,9 @@ Este sistema utiliza `whisper` para procesar archivos de audio. Para que esto fu
 └── transcripcion.html          # Vista de detalle
 
 ```
+
+---
+Aquí tienes la sección de **"Configuración del Entorno Virtual"** actualizada para que la incluyas en tu `README.md`. He organizado los comandos para que cualquier usuario sepa exactamente qué hacer en Windows:
 
 ---
 
